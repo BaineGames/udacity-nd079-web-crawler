@@ -4,7 +4,14 @@ import java.io.Writer;
 import java.nio.file.Path;
 import java.util.Objects;
 
+import java.io.IOException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.nio.file.Files;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 /**
  * Utility class to write a {@link CrawlResult} to file.
  */
@@ -30,6 +37,25 @@ public final class CrawlResultWriter {
     // This is here to get rid of the unused variable warning.
     Objects.requireNonNull(path);
     // TODO: Fill in this method.
+    //using a bufferedwriter - write to path
+//Reference material https://www.baeldung.com/java-write-to-file
+    BufferedWriter myWriter = null;
+    try {
+      myWriter = new BufferedWriter(new FileWriter(path.toString(), true));
+      //console.log(path.toString()) -- my dumbass is thinking javascript
+      System.out.println(path.toString());
+      write(myWriter);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    } finally {
+      try {
+        if (myWriter != null) {
+          myWriter.close();
+        }
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
   }
 
   /**
@@ -41,10 +67,8 @@ public final class CrawlResultWriter {
     // This is here to get rid of the unused variable warning.
     Objects.requireNonNull(writer);
     // TODO: Fill in this method.
-
     //lets try to write the json file using objectmapper and writer
     //Reference material https://attacomsian.com/blog/jackson-write-json-file and https://www.baeldung.com/jackson-object-mapper-tutorial
-
     ObjectMapper myMapper = new ObjectMapper();
     //disable auto close target because test yelled at me
     myMapper.disable(com.fasterxml.jackson.core.JsonGenerator.Feature.AUTO_CLOSE_TARGET);
