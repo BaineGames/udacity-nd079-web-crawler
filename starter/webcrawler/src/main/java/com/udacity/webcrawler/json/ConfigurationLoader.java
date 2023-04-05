@@ -4,6 +4,9 @@ import java.io.Reader;
 import java.nio.file.Path;
 import java.util.Objects;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+
 /**
  * A static utility class that loads a JSON configuration file.
  */
@@ -25,8 +28,15 @@ public final class ConfigurationLoader {
    */
   public CrawlerConfiguration load() {
     // TODO: Fill in this method.
+    // Reference material includes https://docs.oracle.com/javase/tutorial/essential/io/file.html
 
-    return new CrawlerConfiguration.Builder().build();
+    //lets try to load in the config using file reader
+    try (Reader reader = new java.io.FileReader(path.toString())) {
+      CrawlerConfiguration myConfigInformation = read(reader);
+      return myConfigInformation;
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /**
@@ -35,11 +45,15 @@ public final class ConfigurationLoader {
    * @param reader a Reader pointing to a JSON string that contains crawler configuration.
    * @return a crawler configuration
    */
-  public static CrawlerConfiguration read(Reader reader) {
+  public static CrawlerConfiguration read(Reader reader) throws IOException {
     // This is here to get rid of the unused variable warning.
     Objects.requireNonNull(reader);
     // TODO: Fill in this method
+    //Reference material includes https://blogs.oracle.com/javamagazine/post/java-json-serialization-jackson
+    //and https://www.baeldung.com/jackson-object-mapper-tutorial
 
-    return new CrawlerConfiguration.Builder().build();
+    //lets try to read the json file using objectmapper
+    ObjectMapper myMapper = new ObjectMapper();
+    return myMapper.readValue(reader, CrawlerConfiguration.class);
   }
 }
