@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 /**
  * A data class that represents the configuration of a single web crawl.
  */
-@JsonDeserealize(builder = CrawlerConfiguration.Builder.class)
+@JsonDeserialize(builder = CrawlerConfiguration.Builder.class)
 public final class CrawlerConfiguration {
 
   private final List<String> startPages;
