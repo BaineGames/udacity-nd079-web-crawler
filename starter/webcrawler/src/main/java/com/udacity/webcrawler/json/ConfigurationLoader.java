@@ -45,7 +45,7 @@ public final class ConfigurationLoader {
    * @param reader a Reader pointing to a JSON string that contains crawler configuration.
    * @return a crawler configuration
    */
-  public static CrawlerConfiguration read(Reader reader) throws IOException {
+  public static CrawlerConfiguration read(Reader reader) {
     // This is here to get rid of the unused variable warning.
     Objects.requireNonNull(reader);
     // TODO: Fill in this method
@@ -54,6 +54,15 @@ public final class ConfigurationLoader {
 
     //lets try to read the json file using objectmapper
     ObjectMapper myMapper = new ObjectMapper();
-    return myMapper.readValue(reader, CrawlerConfiguration.class);
+    //disable json auto close
+    myMapper.disable(com.fasterxml.jackson.core.JsonParser.Feature.AUTO_CLOSE_SOURCE);
+
+    try{
+        CrawlerConfiguration.Builder myCrawlerBuilder = myMapper.readValue(reader, CrawlerConfiguration.Builder.class);
+        CrawlerConfiguration myConfigInformation = myCrawlerBuilder.build();
+        return myConfigInformation;
+        } catch (IOException e) {
+        throw new RuntimeException(e);
+    }
   }
 }
