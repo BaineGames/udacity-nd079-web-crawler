@@ -8,12 +8,14 @@ import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+// import the stuff we need to use from the library, in this case, it is the JsonProperty annotation and the JsonDeserialize annotation
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A data class that represents the configuration of a single web crawl.
  */
+// add the JsonDeserialize annotation to the class, and pass in the Builder class as the value
 @JsonDeserialize(builder = CrawlerConfiguration.Builder.class)
 public final class CrawlerConfiguration {
 
@@ -194,6 +196,7 @@ public final class CrawlerConfiguration {
      *
      * <p>Does nothing if the given page has already been added. See {@link #getStartPages()}.
      */
+    // for each of the json file properties, we need to annotate to map them accordingly
     @JsonProperty("startPages")
     public Builder addStartPages(String... startPages) {
       for (String startPage : startPages) {
