@@ -6,6 +6,10 @@ Welcome! This is your first week at the startup, **UdaciSearch**. You've been hi
 
 You are given the source code for your company's legacy web crawler, which is single-threaded. You notice it's a bit slow, and you quickly realize a way to improve its performance and impress your new manager. You can upgrade the code to take advantage of multi-core architectures to increase crawler throughput. Furthermore, you will measure the performance of your crawler to prove that, given the same amount of time, the multi-threaded implementation can visit more web pages than the legacy implementation. It might just be your first week, but you're set to impress!
 
+
+## Note from Noah
+I noticed a lot of the commands in the readme here are old or do not work in the same fashion. For example, quotes not used breaks a command or a command is using older syntax. I have updated accordingly to what I think the command is supposed to be that works within my machine.
+
 ## Getting Started
 
 ### Dependencies
@@ -238,15 +242,13 @@ Alternatively, if the value of `config.getResultPath()` is empty, the results sh
 Next, build the project (skipping tests, since they shouldn't all pass yet):
 
 ```
-mvn package -Dmaven.test.skip=true
+mvn package -DskipTests
 ```
 
 Finally, run the legacy crawler using the sample configuration file included with the project:
 
 ```
-java -classpath target/udacity-webcrawler-1.0.jar \
-    com.udacity.webcrawler.main.WebCrawlerMain \
-    src/main/config/sample_config_sequential.json
+java -classpath target/udacity-webcrawler-1.0.jar com.udacity.webcrawler.main.WebCrawlerMain src/main/config/sample_config_sequential.json
 ```
 
 Was the JSON result printed to the terminal?
