@@ -4,6 +4,7 @@ import java.io.Writer;
 import java.nio.file.Path;
 import java.util.Objects;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * Utility class to write a {@link CrawlResult} to file.
  */
@@ -40,5 +41,18 @@ public final class CrawlResultWriter {
     // This is here to get rid of the unused variable warning.
     Objects.requireNonNull(writer);
     // TODO: Fill in this method.
+
+    //lets try to write the json file using objectmapper and writer
+    //Reference material https://attacomsian.com/blog/jackson-write-json-file and https://www.baeldung.com/jackson-object-mapper-tutorial
+
+    ObjectMapper myMapper = new ObjectMapper();
+    //disable auto close target because test yelled at me
+    myMapper.disable(com.fasterxml.jackson.core.JsonGenerator.Feature.AUTO_CLOSE_TARGET);
+    //Using myMapper, use a try catch block to write the json file
+    try{
+      myMapper.writeValue(writer, result);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
   }
 }
